@@ -31,7 +31,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>be.multimedi.textAdventureDunguonSlasher.App</mainClass>
+                            <mainClass>be.multimedi.textAdventureDungeonSlasher.App</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

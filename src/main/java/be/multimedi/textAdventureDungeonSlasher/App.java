@@ -1,4 +1,4 @@
-package be.multimedi.textAdventureDunguonSlasher;
+package be.multimedi.textAdventureDungeonSlasher;
 
 import java.util.Random;
 import java.util.Scanner;

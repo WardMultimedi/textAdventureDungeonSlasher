@@ -1,2 +1,2 @@
 Manifest-Version: 1.0
-Main-Class: be.multimedi.textAdventureDunguonSlasher.App
+Main-Class: be.multimedi.textAdventureDungeonSlasher.App
