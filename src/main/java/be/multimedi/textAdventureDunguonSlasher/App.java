@@ -14,7 +14,7 @@ public class App {
         do {
             app.startGame();
             do {
-                System.out.println("Would you like to play again? (y/n): ");
+                System.out.print("\nWould you like to play again? (y/n): ");
                 answer = keyb.nextLine();
                 answer = answer.toLowerCase();
             }while(!answer.equals("y") && !answer.equals("n"));
