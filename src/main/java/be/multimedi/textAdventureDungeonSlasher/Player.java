@@ -9,6 +9,7 @@ public class Player {
 
     private int healthPotionHealAmount = 30;
     private int inventoryPotionCount = 3;
+    private int inventoryPotionUsed = 0;
     private int battlesWon = 0;
     private int enemiesEncountered = 0;
 
@@ -17,9 +18,14 @@ public class Player {
         if (inventoryPotionCount > 0) {
             inventoryPotionCount--;
             health += healthPotionHealAmount;
+            inventoryPotionUsed++;
             return true; //--> ok
         }
         return false; //--> not ok
+    }
+
+    public void addHealth( int hp){
+        health += hp;
     }
 
     public void incrementEnemiesEncountered() {
@@ -28,6 +34,10 @@ public class Player {
 
     public void incrementBattlesWon() {
         battlesWon++;
+    }
+
+    public void incrementPotions(){
+        inventoryPotionCount++;
     }
 
     //# getters
@@ -53,5 +63,13 @@ public class Player {
 
     public int getMaxDamage() {
         return maxDamage;
+    }
+
+    public int getHealthPotionHealAmount() {
+        return healthPotionHealAmount;
+    }
+
+    public int getInventoryPotionUsed() {
+        return inventoryPotionUsed;
     }
 }

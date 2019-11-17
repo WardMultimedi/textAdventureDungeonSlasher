@@ -7,18 +7,22 @@ public class Enemy {
     private int health;
     private int maxDamage;
 
-    private String enemyType;
+    private String type;
 
     //# constructor(s)
-    public Enemy(String enemyType, int maxHealth, int maxDamage) {
-        this.enemyType = enemyType;
-        health = new Random().nextInt(maxHealth) + 1;
+    public Enemy(String type, int health, int maxDamage) {
+        this.type = type;
+        this.health = health;
         this.maxDamage = maxDamage;
     }
 
     //# actions
     public int getRandomDamage() {
         return new Random().nextInt(maxDamage);
+    }
+
+    public void addHealth( int hp){
+        health += hp;
     }
 
     //# getters
@@ -30,7 +34,7 @@ public class Enemy {
         return maxDamage;
     }
 
-    public String getEnemyType() {
-        return enemyType;
+    public String getType() {
+        return type;
     }
 }
