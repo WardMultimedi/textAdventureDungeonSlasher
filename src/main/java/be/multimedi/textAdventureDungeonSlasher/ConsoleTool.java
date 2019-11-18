@@ -63,4 +63,16 @@ public final class ConsoleTool {
       } while (input < minimum || input > maximum);
       return input;
    }
+
+   public static boolean askUserYesNoQuestion(String question, boolean useDefaultValue, boolean defaultValue){
+      do {
+         System.out.print(question);
+         String answer = keyboard.nextLine();
+         answer = answer.toLowerCase();
+         if(answer.equals("y")) return true;
+         else if(answer.equals("n")) return true;
+         else if(useDefaultValue && answer.isBlank()) return defaultValue;
+         System.out.println("Error: input must be y or n.");
+      }while(true);
+   }
 }

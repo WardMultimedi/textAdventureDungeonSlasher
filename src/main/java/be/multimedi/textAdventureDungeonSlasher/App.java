@@ -7,30 +7,25 @@ public class App {
 
     public static void main(String[] args){
         //System.out.println("Java version: " + System.getProperty("java.version"));
-
-        Scanner keyb = new Scanner(System.in);
         App app = new App();
         String answer;
         do {
             app.startGame();
-            do {
-                System.out.print("\nWould you like to play again? (y/n): ");
-                answer = keyb.nextLine();
-                answer = answer.toLowerCase();
-            }while(!answer.equals("y") && !answer.equals("n"));
-        }while(answer.equals("y"));
+        }while(ConsoleTool.askUserYesNoQuestion(
+                "Would you like to play again? (y/n default:no)",
+                true, false));
     }
 
     public void startGame() {
         // System objects
-        Scanner keyb = new Scanner(System.in);
         Random rand = new Random();
 
         // Player variables
         Player player = new Player();
 
         // Game variables
-        String[] enemyTypes = { "Skeleton", "Zomie", "Warrior", "Assasin", "Spider", "Minotour", "Dark templar"};
+        String[] enemyTypes = { "Skeleton", "Zomie", "Warrior",
+                "Assasin", "Spider", "Minotour", "Dark templar"};
         int enemyMaxHealth = 60;
         Enemy enemy = null;
         int healthPotionDropChance = 50; // percentage
@@ -44,7 +39,7 @@ public class App {
         System.out.println("And next to it, behind some bushes is a stairway down in the ground.");
         System.out.println("It suddenly starts raining hard, you look around but see no shelter nearby.");
         System.out.println("You inspect the structure fast, it seems stable, and you go down the stairs.\n");
-        System.out.println("Press enter to continue.");keyb.nextLine();
+        ConsoleTool.askPressEnterToContinue();
         boolean running = true;
 
         GAME_LOOP:
@@ -54,7 +49,6 @@ public class App {
             player.incrementEnemiesEncountered();
             if(player.getEnemiesEncountered()%20==0){
                 enemy = new Enemy("Dragon", 100+ rand.nextInt(enemyMaxHealth), 50);
-
             }else{
                 enemy = new Enemy(enemyTypes[rand.nextInt(enemyTypes.length)], 1+ rand.nextInt(enemyMaxHealth-1), 50);
             }
@@ -71,16 +65,9 @@ public class App {
                 System.out.println("\t2. Drink health potion");
                 System.out.println("\t3. Run!");
 
-                System.out.print("\t** Your choice: ");
-                String input = keyb.nextLine();
-                int inputValue = 0;
-                try {
-                    inputValue = Integer.parseInt(input);
-                }catch (NumberFormatException ime){
-                    System.out.println("Error: Input was not a number: Number expected between 1 and 3");
-                    continue FIGHT_LOOP;
-                }
-                switch (inputValue){
+                int choice = ConsoleTool.askUserInputInteger(
+                        "\t** Your choice: ", 1, 3);
+                switch (choice){
                     case 1:
                         // Attack
                         int playerDoDamage = player.getRandomDamage();
@@ -141,19 +128,12 @@ public class App {
             System.out.println("1. Continue fighting");
             System.out.println("2. Exit dungeon");
 
-            System.out.print("** Your choice: ");
-            String input = keyb.nextLine();
-
-            while(!input.equals("1") && !input.equals("2")){
-                System.out.println("Error: Invalid input! Number expected between 1 and 2.");
-                System.out.print("** Your choice: ");
-                input = keyb.nextLine();
-            }
-            switch (input){
-                case "1":
+            int choice = ConsoleTool.askUserInputInteger("** Your choice: ",1,2);
+            switch (choice){
+                case 1:
                     System.out.println("You continue on your adventure!");
                     break;
-                case "2":
+                case 2:
                     System.out.println("You exit the dungeon, successful from your adventures!");
                     break GAME_LOOP;
             }
