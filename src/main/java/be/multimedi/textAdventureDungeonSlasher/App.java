@@ -152,10 +152,10 @@ public class App {
             int choice = ConsoleTool.askUserInputInteger("** Your choice: ", 1, 2);
             switch (choice) {
                 case 1:
-                    System.out.println("You continue on your adventure!");
+                    System.out.println("\n> You continue on your adventure!");
                     break;
                 case 2:
-                    System.out.println("You exit the dungeon, successful from your adventures!");
+                    System.out.println("\n> You exit the dungeon, successful from your adventures!");
                     break GAME_LOOP;
             }
         }// --> GAME_LOOP // while(running)
