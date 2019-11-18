@@ -12,6 +12,7 @@ public class Player {
     private int inventoryPotionUsed = 0;
     private int battlesWon = 0;
     private int enemiesEncountered = 0;
+    private int gold = 0;
 
     //# actions
     public boolean drinkHealthPotion() {
@@ -38,6 +39,10 @@ public class Player {
 
     public void incrementPotions(){
         inventoryPotionCount++;
+    }
+
+    public void addGold(int gold){
+        this.gold += gold;
     }
 
     //# getters
@@ -71,5 +76,9 @@ public class Player {
 
     public int getInventoryPotionUsed() {
         return inventoryPotionUsed;
+    }
+
+    public int getGold() {
+        return gold;
     }
 }

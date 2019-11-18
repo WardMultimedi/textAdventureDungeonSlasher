@@ -5,14 +5,13 @@ import java.util.Scanner;
 
 public class App {
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         //System.out.println("Java version: " + System.getProperty("java.version"));
         App app = new App();
-        String answer;
         do {
             app.startGame();
-        }while(ConsoleTool.askUserYesNoQuestion(
-                "Would you like to play again? (y/n default:no)",
+        } while (ConsoleTool.askUserYesNoQuestion(
+                "Would you like to play again? (y/n default:no): ",
                 true, false));
     }
 
@@ -24,9 +23,10 @@ public class App {
         Player player = new Player();
 
         // Game variables
-        String[] enemyTypes = { "Skeleton", "Zomie", "Warrior",
+        String[] enemyTypes = {"Skeleton", "Zomie", "Warrior",
                 "Assasin", "Spider", "Minotour", "Dark templar"};
         int enemyMaxHealth = 60;
+        int enemyMinHealth = 0;
         Enemy enemy = null;
         int healthPotionDropChance = 50; // percentage
 
@@ -43,31 +43,39 @@ public class App {
         boolean running = true;
 
         GAME_LOOP:
-        while(running){
+        while (running) {
             // new enemy/round
             System.out.println("##|==========>");
             player.incrementEnemiesEncountered();
-            if(player.getEnemiesEncountered()%20==0){
-                enemy = new Enemy("Dragon", 100+ rand.nextInt(enemyMaxHealth), 50);
-            }else{
-                enemy = new Enemy(enemyTypes[rand.nextInt(enemyTypes.length)], 1+ rand.nextInt(enemyMaxHealth-1), 50);
+            boolean specialRound = player.getEnemiesEncountered() % 20 == 0;
+            int difficulty = player.getEnemiesEncountered() / 20;
+            if (specialRound) {
+                enemy = new Enemy("Dragon",
+                        100 * difficulty * 1 + rand.nextInt(enemyMaxHealth), 50);
+                //increase difficulty of next enemy's
+                enemyMaxHealth = 60 + 20 * difficulty;
+                enemyMinHealth = 20 * difficulty;
+            } else {
+                enemy = new Enemy(enemyTypes[rand.nextInt(enemyTypes.length)],
+                        enemyMinHealth + 1 + rand.nextInt(enemyMaxHealth), 25);
             }
             System.out.println("\t# " + enemy.getType() + " has appeared! #\n");
 
             FIGHT_LOOP:
-            while (enemy.getHealth()>0){
+            while (enemy.getHealth() > 0) {
                 // do battle
 
                 System.out.println("\tYour HP: " + player.getHealth());
                 System.out.println("\t" + enemy.getType() + "'s HP: " + enemy.getHealth());
                 System.out.println("\n\tWhat would you like to do?");
                 System.out.println("\t1. Attack");
-                System.out.println("\t2. Drink health potion");
-                System.out.println("\t3. Run!");
+                System.out.println("\t2. Drink health potion (" + player.getInventoryPotionCount() + ")");
+                if (!specialRound)
+                    System.out.println("\t3. Run!");
 
                 int choice = ConsoleTool.askUserInputInteger(
-                        "\t** Your choice: ", 1, 3);
-                switch (choice){
+                        "\t** Your choice: ", 1, specialRound ? 2 : 3);
+                switch (choice) {
                     case 1:
                         // Attack
                         int playerDoDamage = player.getRandomDamage();
@@ -79,18 +87,19 @@ public class App {
                         System.out.println("\t> You strike the " + enemy.getType() + " for " + playerDoDamage + " damage.");
                         System.out.println("\t> You recieve " + enemyDoDamage + " in retaliation!");
 
-                        if( player.getHealth()< 1 ){
-                            System.out.println("\t> You have taken too much damage, you are too weak to go on!\n");
-                            break GAME_LOOP;
+                        if (player.getHealth() < 1) {
+                            System.out.println("\t> You have taken too much damage, you are too weak to go on!");
+                            System.out.println("\t> You run away from the " + enemy.getType() + ".\n");
+                            break FIGHT_LOOP;//GAME_LOOP;
                         }
                         break;
                     case 2:
-                        // Health potion
-                        if(player.drinkHealthPotion()){
+                        // Take Health potion
+                        if (player.drinkHealthPotion()) {
                             System.out.println("\t> You drink a health potion, healing yourself for " + player.getHealthPotionHealAmount() + ".");
                             System.out.println("\t> You now have " + player.getHealth() + " HP.");
                             System.out.println("\t> You have " + player.getInventoryPotionCount() + " health potions left.\n");
-                        }else{
+                        } else {
                             System.out.println("\t> You have no health potions left! Defeat enemies for a chance to get one!\n");
                         }
                         break;
@@ -98,25 +107,37 @@ public class App {
                         // Run
                         System.out.println("\t> You run away from the " + enemy.getType() + "!\n");
                         continue GAME_LOOP;
-                        //break FIGHT_LOOP;
                     default:
                         System.out.println("Error: Invalid input! Number expected between 1 and 3.");
                 }
 
-            }// --> FIGHT_LOOP
+            }// --> FIGHT_LOOP // while (enemy.getHealth() > 0)
 
             //Fight result
-            if(player.getHealth() < 1) {
-                System.out.println("You limp out of the dungeon, weak from battle.");
+            if (player.getHealth() < 1) {
+                // flee from battles
+                System.out.println("> You limp out of the dungeon, weak from battle.");
+                if(enemy.getHealth() > 0 && rand.nextInt(100 ) < 50 ) {
+                    System.out.println("> The " + enemy.getType() + " attacks you from behind!");
+                    System.out.println("> The dark dungeon will be your final resting place.");
+                }else{
+                    System.out.println("> With some extreme luck you reach safety, outside in the rain.");
+                }
                 break;
             }
             System.out.println("-!!------------------------!!-");
-            if(enemy.getHealth()<1){
+            if (enemy.getHealth() < 1) {
                 System.out.println(" # " + enemy.getType() + " was defeated! #");
                 player.incrementBattlesWon();
+                int goldWon = (1+ rand.nextInt(10))*10;
+                if( specialRound )
+                    goldWon += 10_000;
+                System.out.println(" # gold found: " + goldWon + " gold coins. #");
+                player.addGold(goldWon);
+                System.out.println(" # You now have " + player.getGold() + " gold coins. #");
             }
             System.out.println(" # You have " + player.getHealth() + " HP left. #");
-            if(enemy.getHealth()<1 && rand.nextInt(100) < healthPotionDropChance){
+            if (enemy.getHealth() < 1 && ( rand.nextInt(100) < healthPotionDropChance || specialRound )) {
                 player.incrementPotions();
                 System.out.println(" # The " + enemy.getType() + " dropped a health potion! #");
                 System.out.println(" # You now have " + player.getInventoryPotionCount() + " health potion(s). #");
@@ -128,8 +149,8 @@ public class App {
             System.out.println("1. Continue fighting");
             System.out.println("2. Exit dungeon");
 
-            int choice = ConsoleTool.askUserInputInteger("** Your choice: ",1,2);
-            switch (choice){
+            int choice = ConsoleTool.askUserInputInteger("** Your choice: ", 1, 2);
+            switch (choice) {
                 case 1:
                     System.out.println("You continue on your adventure!");
                     break;
@@ -137,7 +158,10 @@ public class App {
                     System.out.println("You exit the dungeon, successful from your adventures!");
                     break GAME_LOOP;
             }
-        }// --> GAME_LOOP
+        }// --> GAME_LOOP // while(running)
+        System.out.println("Statisics");
+        System.out.println("=========");
+        System.out.println("> Gold coins: " + player.getGold());
         System.out.println("> Enemies encountered: " + player.getEnemiesEncountered());
         System.out.println("> Enemies defeated: " + player.getBattlesWon());
         System.out.println("> Health remaining: " + player.getHealth());
