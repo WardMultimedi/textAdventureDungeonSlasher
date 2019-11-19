@@ -23,7 +23,7 @@ public class App {
         Player player = new Player();
 
         // Game variables
-        String[] enemyTypes = {"Skeleton", "Zomie", "Warrior",
+        String[] enemyTypes = {"Skeleton", "Zombie", "Warrior",
                 "Assasin", "Spider", "Minotour", "Dark templar"};
         int enemyMaxHealth = 60;
         int enemyMinHealth = 0;
@@ -45,8 +45,8 @@ public class App {
         GAME_LOOP:
         while (running) {
             // new enemy/round
-            System.out.println("##|==========>");
             player.incrementEnemiesEncountered();
+            System.out.println("##|==========> " + player.getEnemiesEncountered());
             boolean specialRound = player.getEnemiesEncountered() % 20 == 0;
             int difficulty = player.getEnemiesEncountered() / 20;
             if (specialRound) {
@@ -117,32 +117,32 @@ public class App {
             if (player.getHealth() < 1) {
                 // flee from battles
                 System.out.println("> You limp out of the dungeon, weak from battle.");
-                if(enemy.getHealth() > 0 && rand.nextInt(100 ) < 50 ) {
+                if (enemy.getHealth() > 0 && rand.nextInt(100) < 50) {
                     System.out.println("> The " + enemy.getType() + " attacks you from behind!");
                     System.out.println("> The dark dungeon will be your final resting place.");
-                }else{
+                } else {
                     System.out.println("> With some extreme luck you reach safety, outside in the rain.");
                 }
                 break;
             }
-            System.out.println("-!!------------------------!!-");
+            ConsoleTool.printAlert(null); //System.out.println("-!!------------------------!!-");
             if (enemy.getHealth() < 1) {
-                System.out.println(" # " + enemy.getType() + " was defeated! #");
+                ConsoleTool.printAlert( enemy.getType() + " was defeated!");
                 player.incrementBattlesWon();
-                int goldWon = (1+ rand.nextInt(10))*10;
-                if( specialRound )
+                int goldWon = (1 + rand.nextInt(10)) * 10;
+                if (specialRound)
                     goldWon += 10_000;
-                System.out.println(" # gold found: " + goldWon + " gold coins. #");
+                ConsoleTool.printAlert("gold found: " + goldWon + " gold coins.");
                 player.addGold(goldWon);
-                System.out.println(" # You now have " + player.getGold() + " gold coins. #");
+                ConsoleTool.printAlert("You now have " + player.getGold() + " gold coins.");
             }
-            System.out.println(" # You have " + player.getHealth() + " HP left. #");
-            if (enemy.getHealth() < 1 && ( rand.nextInt(100) < healthPotionDropChance || specialRound )) {
+            ConsoleTool.printAlert("You have " + player.getHealth() + " HP left.");
+            if (enemy.getHealth() < 1 && (rand.nextInt(100) < healthPotionDropChance || specialRound)) {
                 player.incrementPotions();
-                System.out.println(" # The " + enemy.getType() + " dropped a health potion! #");
-                System.out.println(" # You now have " + player.getInventoryPotionCount() + " health potion(s). #");
+                ConsoleTool.printAlert("The " + enemy.getType() + " dropped a health potion!");
+                ConsoleTool.printAlert("You now have " + player.getInventoryPotionCount() + " health potion(s).");
             }
-            System.out.println("-!!------------------------!!-");
+            ConsoleTool.printAlert(null); //System.out.println("-!!------------------------!!-");
 
             // Future action
             System.out.println("What would you like to do now?");
