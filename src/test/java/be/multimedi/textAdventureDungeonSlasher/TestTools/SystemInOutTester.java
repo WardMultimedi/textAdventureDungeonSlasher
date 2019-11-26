@@ -1,4 +1,4 @@
-package be.multimedi.TestTools;
+package be.multimedi.textAdventureDungeonSlasher.TestTools;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
