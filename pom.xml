@@ -6,7 +6,7 @@
 
     <groupId>be.multimedi.textAdventureDungeonSlasher</groupId>
     <artifactId>DungeonSlasher</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
     <packaging>jar</packaging>
 
     <name>Dungeon Slasher</name>
@@ -15,12 +15,33 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
+        <exec.mainClass>${groupId}.App</exec.mainClass>
     </properties>
+
+    <dependencies>
+        <!-- JUnit Testing lib -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.2.0</version>
+            <scope>test</scope><!-- only @ test cycle -->
+        </dependency>
+    </dependencies>
 
     <build>
         <finalName>${project.artifactId}</finalName>
 
         <plugins>
+            <plugin>
+                <!-- Compiler -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.0</version>
+                <configuration>
+                    <source>11</source>
+                    <target>11</target>
+                </configuration>
+            </plugin>
             <plugin>
                 <!-- Build an executable JAR -->
                 <groupId>org.apache.maven.plugins</groupId>
@@ -36,6 +57,37 @@
                     </archive>
                 </configuration>
             </plugin>
+            <plugin>
+                <!-- Junit5.0 testing -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.21.0</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.junit.platform</groupId>
+                        <artifactId>junit-platform-surefire-provider</artifactId>
+                        <version>1.2.0-M1</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.junit.jupiter</groupId>
+                        <artifactId>junit-jupiter-engine</artifactId>
+                        <version>5.2.0</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
         </plugins>
     </build>
+
+    <scm>
+        <connection>scm:git:git@github.com:WardMultimedi/textAdventureDungeonSlasher.git</connection>
+        <url>scm:git:git@github.com:WardMultimedi/textAdventureDungeonSlasher.git</url>
+        <developerConnection>scm:git:git@github.com:WardMultimedi/textAdventureDungeonSlasher.git</developerConnection>
+    </scm>
+    <distributionManagement>
+        <repository>
+            <id>localSnap</id>
+            <name>RepositoryGitHub</name>
+            <url>https://maven.pkg.github.com/WardMultimedi</url>
+        </repository>
+    </distributionManagement>
 </project>
