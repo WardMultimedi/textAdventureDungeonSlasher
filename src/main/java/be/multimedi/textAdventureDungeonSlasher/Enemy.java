@@ -2,39 +2,42 @@ package be.multimedi.textAdventureDungeonSlasher;
 
 import java.util.Random;
 
+/**
+ * DungeonSlasher Enemy class
+ */
 public class Enemy {
-    //# variables
-    private int health;
-    private int maxDamage;
+   //# variables
+   private int health;
+   private int maxDamage;
 
-    private String type;
+   private String type;
 
-    //# constructor(s)
-    public Enemy(String type, int health, int maxDamage) {
-        this.type = type;
-        this.health = health;
-        this.maxDamage = maxDamage;
-    }
+   //# constructor(s)
+   public Enemy(String type, int health, int maxDamage) {
+      this.type = type;
+      this.health = health;
+      this.maxDamage = maxDamage;
+   }
 
-    //# actions
-    public int getRandomDamage() {
-        return new Random().nextInt(maxDamage);
-    }
+   //# actions
+   public int getRandomDamage() {
+      return new Random().nextInt(maxDamage);
+   }
 
-    public void addHealth( int hp){
-        health += hp;
-    }
+   public void addHealth(int hp) {
+      health += hp;
+   }
 
-    //# getters
-    public int getHealth() {
-        return health;
-    }
+   //# getters
+   public int getHealth() {
+      return health;
+   }
 
-    public int getMaxDamage() {
-        return maxDamage;
-    }
+   public int getMaxDamage() {
+      return maxDamage;
+   }
 
-    public String getType() {
-        return type;
-    }
+   public String getType() {
+      return type;
+   }
 }
