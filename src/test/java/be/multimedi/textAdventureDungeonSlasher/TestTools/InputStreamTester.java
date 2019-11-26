@@ -1,4 +1,4 @@
-package be.multimedi.TestTools;
+package be.multimedi.textAdventureDungeonSlasher.TestTools;
 
 import java.io.IOException;
 import java.io.InputStream;
