@@ -1,7 +1,6 @@
 package be.multimedi.textAdventureDungeonSlasher;
 
 import java.util.Random;
-import java.util.Scanner;
 
 public class App {
 
@@ -125,24 +124,24 @@ public class App {
                 }
                 break;
             }
-            ConsoleTool.printAlert(null); //System.out.println("-!!------------------------!!-");
+            StringDecorator.printAlert(null); //System.out.println("-!!------------------------!!-");
             if (enemy.getHealth() < 1) {
-                ConsoleTool.printAlert( enemy.getType() + " was defeated!");
+                StringDecorator.printAlert( enemy.getType() + " was defeated!");
                 player.incrementBattlesWon();
                 int goldWon = (1 + rand.nextInt(10)) * 10;
                 if (specialRound)
                     goldWon += 10_000;
-                ConsoleTool.printAlert("gold found: " + goldWon + " gold coins.");
+                StringDecorator.printAlert("gold found: " + goldWon + " gold coins.");
                 player.addGold(goldWon);
-                ConsoleTool.printAlert("You now have " + player.getGold() + " gold coins.");
+                StringDecorator.printAlert("You now have " + player.getGold() + " gold coins.");
             }
-            ConsoleTool.printAlert("You have " + player.getHealth() + " HP left.");
+            StringDecorator.printAlert("You have " + player.getHealth() + " HP left.");
             if (enemy.getHealth() < 1 && (rand.nextInt(100) < healthPotionDropChance || specialRound)) {
                 player.incrementPotions();
-                ConsoleTool.printAlert("The " + enemy.getType() + " dropped a health potion!");
-                ConsoleTool.printAlert("You now have " + player.getInventoryPotionCount() + " health potion(s).");
+                StringDecorator.printAlert("The " + enemy.getType() + " dropped a health potion!");
+                StringDecorator.printAlert("You now have " + player.getInventoryPotionCount() + " health potion(s).");
             }
-            ConsoleTool.printAlert(null); //System.out.println("-!!------------------------!!-");
+            StringDecorator.printAlert(null); //System.out.println("-!!------------------------!!-");
 
             // Future action
             System.out.println("What would you like to do now?");
