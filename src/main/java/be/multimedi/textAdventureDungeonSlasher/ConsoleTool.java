@@ -19,9 +19,9 @@ public final class ConsoleTool {
    /**
     * Ask the user for a boolean(may repeat untill input is correct).
     *
-    * @param question          The question to ask(print to) the user.
-    * @param useDefaultValue   Use the default value if the user inputs a blank line? yes or no -> true or false.
-    * @param defaultValue   The default value to use if the user inputs a blank line.
+    * @param question        The question to ask(print to) the user.
+    * @param useDefaultValue Use the default value if the user inputs a blank line? yes or no ? true or false.
+    * @param defaultValue    The default value to use if the user inputs a blank line.
     * @return the user input: string.
     */
    public static boolean askUserYesNoQuestion(String question, boolean useDefaultValue, boolean defaultValue) {
@@ -39,7 +39,7 @@ public final class ConsoleTool {
    /**
     * Ask the user for a boolean(repeat untill input is correct).
     *
-    * @param question          The question to ask(print to) the user.
+    * @param question The question to ask(print to) the user.
     * @return the user input: string.
     */
    public static boolean askUserYesNoQuestion(String question) {
@@ -164,14 +164,14 @@ public final class ConsoleTool {
       return ld;
    }
 
-    /**
-     * Ask the user for a LocalDate(repeat untill input is correct).
-     *
-     * @param question    the question to ask(print to) the user.
-     * @param minimumDate the minimum date the inputDate is allowed to be.
-     * @param maximumDate the maximum date the inputDate is allowed to be.
-     * @return the user input: LocalDate.
-     */
+   /**
+    * Ask the user for a LocalDate(repeat untill input is correct).
+    *
+    * @param question    the question to ask(print to) the user.
+    * @param minimumDate the minimum date the inputDate is allowed to be.
+    * @param maximumDate the maximum date the inputDate is allowed to be.
+    * @return the user input: LocalDate.
+    */
    public static LocalDate askUserInputDateBetween(String question, LocalDate minimumDate, LocalDate maximumDate) {
       LocalDate ld = askUserInputDate(question);
       while (ld.isBefore(minimumDate) || ld.isEqual(minimumDate) ||
