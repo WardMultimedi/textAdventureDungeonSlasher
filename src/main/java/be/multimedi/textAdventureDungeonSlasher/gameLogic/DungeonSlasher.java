@@ -1,6 +1,8 @@
 package be.multimedi.textAdventureDungeonSlasher.gameLogic;
 
-import be.multimedi.textAdventureDungeonSlasher.tools.ConsoleTool;
+import be.multimedi.textAdventureDungeonSlasher.tools.ConsoleColorTool;
+import be.multimedi.textAdventureDungeonSlasher.tools.ConsoleColors;
+import be.multimedi.textAdventureDungeonSlasher.tools.ConsoleInputTool;
 import be.multimedi.textAdventureDungeonSlasher.tools.StringDecorator;
 
 import java.util.Random;
@@ -33,14 +35,15 @@ public class DungeonSlasher {
       System.out.println("And next to it, behind some bushes is a stairway down in the ground.");
       System.out.println("It suddenly starts raining hard, you look around but see no shelter nearby.");
       System.out.println("You inspect the structure fast, it seems stable, and you go down the stairs.\n");
-      ConsoleTool.askPressEnterToContinue();
+      ConsoleInputTool.askPressEnterToContinue();
       boolean running = true;
 
       GAME_LOOP:
       while (running) {
          // new enemy/round
          player.incrementEnemiesEncountered();
-         System.out.println("##|==========> " + player.getEnemiesEncountered());
+         ConsoleColorTool.printInColorAndReset("##|==========> " + player.getEnemiesEncountered(), ConsoleColors.FG_RED);
+         //System.out.println("##|==========> " + player.getEnemiesEncountered());
          boolean specialRound = player.getEnemiesEncountered() % 20 == 0;
          int difficulty = player.getEnemiesEncountered() / 20;
          if (specialRound) {
@@ -67,7 +70,7 @@ public class DungeonSlasher {
             if (!specialRound)
                System.out.println("\t3. Run!");
 
-            int choice = ConsoleTool.askUserInputInteger(
+            int choice = ConsoleInputTool.askUserInputInteger(
                     "\t** Your choice: ", 1, specialRound ? 2 : 3);
             switch (choice) {
                case 1:
@@ -119,6 +122,7 @@ public class DungeonSlasher {
             }
             break;
          }
+         ConsoleColorTool.setPrintColor(ConsoleColors.FG_GREEN);
          StringDecorator.printAlert(null); //System.out.println("-!!------------------------!!-");
          if (enemy.getHealth() < 1) {
             StringDecorator.printAlert(enemy.getType() + " was defeated!");
@@ -137,13 +141,14 @@ public class DungeonSlasher {
             StringDecorator.printAlert("You now have " + player.getInventoryPotionCount() + " health potion(s).");
          }
          StringDecorator.printAlert(null); //System.out.println("-!!------------------------!!-");
+         ConsoleColorTool.resetPrintgColor();
 
          // Future action
          System.out.println("What would you like to do now?");
          System.out.println("1. Continue fighting");
          System.out.println("2. Exit dungeon");
 
-         int choice = ConsoleTool.askUserInputInteger("** Your choice: ", 1, 2);
+         int choice = ConsoleInputTool.askUserInputInteger("** Your choice: ", 1, 2);
          switch (choice) {
             case 1:
                System.out.println("\n> You continue on your adventure!");

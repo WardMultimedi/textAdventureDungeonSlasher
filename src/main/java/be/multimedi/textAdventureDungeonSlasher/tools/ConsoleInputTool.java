@@ -5,7 +5,7 @@ import java.time.format.DateTimeParseException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public final class ConsoleTool {
+public final class ConsoleInputTool {
    static Scanner keyboard = new Scanner(System.in);
 
    /**

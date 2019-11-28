@@ -1,7 +1,7 @@
 package be.multimedi.textAdventureDungeonSlasher;
 
 import be.multimedi.textAdventureDungeonSlasher.gameLogic.DungeonSlasher;
-import be.multimedi.textAdventureDungeonSlasher.tools.ConsoleTool;
+import be.multimedi.textAdventureDungeonSlasher.tools.ConsoleInputTool;
 
 /**
  * The DungeonSlasher text adventure class, start point
@@ -18,7 +18,7 @@ public class App {
       DungeonSlasher app = new DungeonSlasher();
       do {
          app.startGame();
-      } while (ConsoleTool.askUserYesNoQuestion(
+      } while (ConsoleInputTool.askUserYesNoQuestion(
               "Would you like to play again? (y/n default:no): ",
               true, false));
    }
