@@ -1,4 +1,4 @@
-package be.multimedi.textAdventureDungeonSlasher;
+package be.multimedi.textAdventureDungeonSlasher.gameLogic;
 
 import java.util.Random;
 

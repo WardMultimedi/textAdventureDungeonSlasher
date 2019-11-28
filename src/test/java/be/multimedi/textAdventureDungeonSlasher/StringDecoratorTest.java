@@ -1,6 +1,7 @@
 package be.multimedi.textAdventureDungeonSlasher;
 
 import be.multimedi.textAdventureDungeonSlasher.TestTools.SystemInOutTester;
+import be.multimedi.textAdventureDungeonSlasher.tools.StringDecorator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 

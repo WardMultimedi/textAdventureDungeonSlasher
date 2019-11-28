@@ -1,4 +1,4 @@
-package be.multimedi.textAdventureDungeonSlasher;
+package be.multimedi.textAdventureDungeonSlasher.tools;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
