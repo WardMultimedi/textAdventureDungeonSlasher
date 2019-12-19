@@ -24,7 +24,7 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.2.0</version>
+            <version>5.5.2</version>
             <scope>test</scope><!-- only @ test cycle -->
         </dependency>
 
@@ -46,7 +46,7 @@
                 <!-- Compiler -->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.0</version>
+                <version>3.8.1</version>
                 <configuration>
                     <release>11</release>
                 </configuration>
@@ -63,7 +63,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>be.multimedi.textAdventureDungeonSlasher.App</mainClass>
+                            <mainClass>be.multimedi.textAdventureDungeonSlasher.DungeonSlasherApp</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -73,7 +73,7 @@
                 <!-- Junit5.0 testing -->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.22.2</version>
+                <version>3.0.0-M3</version>
                 <dependencies>
                     <dependency>
                         <groupId>org.junit.platform</groupId>
@@ -88,6 +88,7 @@
                 </dependencies>
                 <configuration>
                     <forkCount>0</forkCount>
+                    <useSystemClassLoader>false</useSystemClassLoader>
                 </configuration>
             </plugin>
 
@@ -116,22 +117,6 @@
         </plugins>
     </build>
 
-    <reporting>
-        <plugins>
-            <plugin>
-                <!-- JavaDoc @ project-site -->
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.1.1</version>
-                <configuration>
-                    <release>11</release>
-                    <sourceFileExcludes>
-                        <sourceFileExclude>**/module-info.java</sourceFileExclude>
-                    </sourceFileExcludes>
-                </configuration>
-            </plugin>
-        </plugins>
-    </reporting>
 
     <scm>
         <connection>scm:git:git@github.com:WardMultimedi/textAdventureDungeonSlasher.git</connection>

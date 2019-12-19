@@ -6,8 +6,8 @@ import be.multimedi.textAdventureDungeonSlasher.tools.ConsoleInputTool;
 /**
  * The DungeonSlasher text adventure class, start point
  */
-public class App {
-
+public class DungeonSlasherApp {
+   DungeonSlasher ds = new DungeonSlasher();
    /**
     * The DungeonSlasher text adventure main(), start point
     *
@@ -15,9 +15,18 @@ public class App {
     */
    public static void main(String[] args) {
       //System.out.println("Java version: " + System.getProperty("java.version"));
-      DungeonSlasher app = new DungeonSlasher();
+      DungeonSlasherApp app = new DungeonSlasherApp();
+      app.startGame();
+
+   }
+
+   void startGame(){
       do {
-         app.startGame();
+         try {
+            ds.startGame();
+         } catch (InterruptedException e) {
+            e.printStackTrace();
+         }
       } while (ConsoleInputTool.askUserYesNoQuestion(
               "Would you like to play again? (y/n default:no): ",
               true, false));

@@ -11,7 +11,7 @@ public class DungeonSlasher {
    /**
     * The DungeonSlasher text adventure start instanceMethod(), start point
     */
-   public void startGame() {
+   public void startGame() throws InterruptedException {
       // System objects
       Random rand = new Random();
 
@@ -19,21 +19,25 @@ public class DungeonSlasher {
       Player player = new Player();
 
       // Game variables
-      String[] enemyTypes = {"Skeleton", "Zombie", "Warrior",
-              "Assasin", "Spider", "Minotour", "Dark templar"};
+      String[] enemyTypes = {"Skeleton", "Zombie", "Warrior", "Giant snake",
+              "Assasin", "Spider", "Minotour", "Dark templar", "Goblin", "Troll"};
       int enemyMaxHealth = 60;
       int enemyMinHealth = 0;
       Enemy enemy = null;
       int healthPotionDropChance = 50; // percentage
 
       // Start of the game
+      System.out.println("\n\n");
       System.out.println("Welcome to Dungeon slasher!");
       System.out.println("~=========================~");
+      Thread.sleep(500);
       System.out.println("\nAfter days of traveling through the woods, you arrive at a clearing.");
       System.out.println("You enter something that looks like the messy ruins of a giant graveyard.");
       System.out.println("In the center is something resembling the remains of a chapel.");
       System.out.println("And next to it, behind some bushes is a stairway down in the ground.");
-      System.out.println("It suddenly starts raining hard, you look around but see no shelter nearby.");
+      System.out.print("It suddenly starts ");
+      System.out.print(ConsoleColorTool.getStringInColorAndReset( "raining", ConsoleColors.FG_BLUE));
+      System.out.println(" hard, you look around but see no shelter nearby.");
       System.out.println("You inspect the structure fast, it seems stable, and you go down the stairs.\n");
       ConsoleInputTool.askPressEnterToContinue();
       boolean running = true;
@@ -61,6 +65,7 @@ public class DungeonSlasher {
          FIGHT_LOOP:
          while (enemy.getHealth() > 0) {
             // do battle
+            Thread.sleep(500);
 
             System.out.println("\tYour HP: " + player.getHealth());
             System.out.println("\t" + enemy.getType() + "'s HP: " + enemy.getHealth());
@@ -107,7 +112,6 @@ public class DungeonSlasher {
                default:
                   System.out.println("Error: Invalid input! Number expected between 1 and 3.");
             }
-
          }// --> FIGHT_LOOP // while (enemy.getHealth() > 0)
 
          //Fight result
@@ -160,7 +164,7 @@ public class DungeonSlasher {
       }// --> GAME_LOOP // while(running)
       System.out.println("Statisics");
       System.out.println("=========");
-      System.out.println("> Gold coins: " + player.getGold());
+      ConsoleColorTool.printInColorAndReset("> Gold coins: " + player.getGold(), ConsoleColors.FG_YELLOW);
       System.out.println("> Enemies encountered: " + player.getEnemiesEncountered());
       System.out.println("> Enemies defeated: " + player.getBattlesWon());
       System.out.println("> Health remaining: " + player.getHealth());

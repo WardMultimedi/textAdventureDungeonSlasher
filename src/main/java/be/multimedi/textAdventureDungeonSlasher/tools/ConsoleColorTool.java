@@ -9,9 +9,19 @@ public class ConsoleColorTool {
       System.out.print(color.getColorStr());
    }
 
+   public static String getStringInColor(String text, ConsoleColors color){
+      return new StringBuilder(color.getColorStr()).append(text).toString();
+   }
+   public static String getStringInColor(String text, ConsoleColors startColor,ConsoleColors endColor){
+      return new StringBuilder(startColor.getColorStr()).append(text)
+              .append(endColor.getColorStr()).toString();
+   }
+
+   public static String getStringInColorAndReset(String text, ConsoleColors color){
+      return getStringInColor(text, color, ConsoleColors.RESET);
+   }
+
    public static void printInColorAndReset(String text, ConsoleColors color){
-      StringBuilder sb = new StringBuilder(color.getColorStr());
-      sb.append(text).append(ConsoleColors.RESET.getColorStr());
-      System.out.println(sb);
+      System.out.println(getStringInColorAndReset(text, color));
    }
 }
