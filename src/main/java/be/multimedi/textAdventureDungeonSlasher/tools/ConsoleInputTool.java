@@ -5,7 +5,15 @@ import java.time.format.DateTimeParseException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+/**
+ * A Utility class to get input from the user using the console
+ */
 public final class ConsoleInputTool {
+   /** Constructor */
+   private ConsoleInputTool() {
+   }
+
+   /** keyboard/Scanner */
    static Scanner keyboard = new Scanner(System.in);
 
    /**
@@ -32,7 +40,7 @@ public final class ConsoleInputTool {
          if (answer.equals("y") || answer.equals("yes")) return true;
          else if (answer.equals("n") || answer.equals("no")) return false;
          else if (useDefaultValue && answer.isBlank()) return defaultValue;
-         System.out.println("Error: input must be y or n.");
+         System.err.println("Error: input must be y or n.");
       } while (true);
    }
 
@@ -53,7 +61,7 @@ public final class ConsoleInputTool {
     * @param minimumCharacters the minimum length of String to return.
     * @return the user input: string.
     */
-   public static String askUserInputString(String question, int minimumCharacters) {
+   public static String askUserString(String question, int minimumCharacters) {
       if (minimumCharacters <= 0) {
          System.out.print(question);
          return keyboard.nextLine();
@@ -70,20 +78,33 @@ public final class ConsoleInputTool {
    }
 
    /**
+    * Ask the user for a String(repeat untill input is correct).
+    *
+    * @param question the question to ask(print to) the user.
+    * @return the user input: string.
+    */
+   public static String askUserString(String question) {
+      return askUserString(question, 0);
+   }
+
+   /**
     * Ask the user for a integer(repeat untill input is correct).
     *
     * @param question the question to ask(print to) the user.
     * @return the user input: integer.
     */
-   public static int askUserInputInteger(String question) {
+   public static int askUserInteger(String question) {
       int input = 0;
-      try {
-         System.out.print(question);
-         input = keyboard.nextInt();
-      } catch (InputMismatchException ime) {
-         System.err.println("Error: input is not a number");
-      } finally {
-         keyboard.nextLine();
+      while(true) {
+         try {
+            System.out.print(question);
+            input = keyboard.nextInt();
+            break;
+         } catch (InputMismatchException ime) {
+            System.err.println("Error: input is not a number");
+         } finally {
+            keyboard.nextLine();
+         }
       }
       return input;
    }
@@ -95,10 +116,10 @@ public final class ConsoleInputTool {
     * @param minimum  the minimum the integer is allowed to be.
     * @return the user input: integer.
     */
-   public static int askUserInputInteger(String question, int minimum) {
-      int input = 0;
+   public static int askUserInteger(String question, int minimum) {
+      int input = minimum-1;
       do {
-         input = askUserInputInteger(question);
+         input = askUserInteger(question);
          if (input < minimum) {
             System.err.println("Error: input must be equal or higher than " + minimum);
          }
@@ -114,10 +135,10 @@ public final class ConsoleInputTool {
     * @param maximum  the maximum the integer is allowed to be.
     * @return the user input: integer.
     */
-   public static int askUserInputInteger(String question, int minimum, int maximum) {
+   public static int askUserInteger(String question, int minimum, int maximum) {
       int input = 0;
       do {
-         input = askUserInputInteger(question);
+         input = askUserInteger(question);
          if (input < minimum) {
             System.err.println("Error: input must be equal or higher than " + minimum);
          } else if (input > maximum) {
@@ -133,7 +154,7 @@ public final class ConsoleInputTool {
     * @param question the question to ask(print to) the user.
     * @return the user input: LocalDate.
     */
-   public static LocalDate askUserInputDate(String question) {
+   public static LocalDate askUserDate(String question) {
       LocalDate ld = null;
       do {
          System.out.print(question);
@@ -152,14 +173,14 @@ public final class ConsoleInputTool {
     * Ask the user for a LocalDate(repeat untill input is correct).
     *
     * @param question    the question to ask(print to) the user.
-    * @param maximumDate the maximum date the inputDate is allowed to be.
+    * @param maximumDate the maximum date that is allowed
     * @return the user input: LocalDate.
     */
-   public static LocalDate askUserInputDateBefore(String question, LocalDate maximumDate) {
-      LocalDate ld = askUserInputDate(question);
+   public static LocalDate askUserDateBefore(String question, LocalDate maximumDate) {
+      LocalDate ld = askUserDate(question);
       while (ld.isAfter(maximumDate) || ld.isEqual(maximumDate)) {
          System.err.println("Error: Date must be before " + maximumDate);
-         ld = askUserInputDate(question);
+         ld = askUserDate(question);
       }
       return ld;
    }
@@ -168,16 +189,14 @@ public final class ConsoleInputTool {
     * Ask the user for a LocalDate(repeat untill input is correct).
     *
     * @param question    the question to ask(print to) the user.
-    * @param minimumDate the minimum date the inputDate is allowed to be.
-    * @param maximumDate the maximum date the inputDate is allowed to be.
+    * @param minimumDate the minimum date that is allowed
     * @return the user input: LocalDate.
     */
-   public static LocalDate askUserInputDateBetween(String question, LocalDate minimumDate, LocalDate maximumDate) {
-      LocalDate ld = askUserInputDate(question);
-      while (ld.isBefore(minimumDate) || ld.isEqual(minimumDate) ||
-              ld.isAfter(maximumDate) || ld.isEqual(maximumDate)) {
-         System.err.println("Error: Date must be between " + minimumDate + " and " + maximumDate);
-         ld = askUserInputDate(question);
+   public static LocalDate askUserDateAfter(String question, LocalDate minimumDate) {
+      LocalDate ld = askUserDate(question);
+      while (ld.isBefore(minimumDate) || ld.isEqual(minimumDate)) {
+         System.err.println("Error: Date must be before " + minimumDate);
+         ld = askUserDate(question);
       }
       return ld;
    }

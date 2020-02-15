@@ -1,4 +1,2 @@
-module textAdventureDungeonSlasher {
-   exports be.multimedi.textAdventureDungeonSlasher;
-   opens be.multimedi.textAdventureDungeonSlasher;
+open module textAdventureDungeonSlasher {
 }
