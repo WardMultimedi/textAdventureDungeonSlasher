@@ -1,9 +1,8 @@
 package be.multimedi.textAdventureDungeonSlasher.gameLogic;
 
-import be.multimedi.textAdventureDungeonSlasher.tools.ConsoleColorTool;
 import be.multimedi.textAdventureDungeonSlasher.tools.ConsoleColors;
 import be.multimedi.textAdventureDungeonSlasher.tools.ConsoleInputTool;
-import be.multimedi.textAdventureDungeonSlasher.tools.StringDecorator;
+import be.multimedi.textAdventureDungeonSlasher.tools.ConsoleOutputTool;
 
 import java.util.Random;
 
@@ -36,7 +35,7 @@ public class DungeonSlasher {
       System.out.println("In the center is something resembling the remains of a chapel.");
       System.out.println("And next to it, behind some bushes is a stairway down in the ground.");
       System.out.print("It suddenly starts ");
-      System.out.print(ConsoleColorTool.getStringInColorAndReset( "raining", ConsoleColors.FG_BLUE));
+      ConsoleOutputTool.printInColorAndReset( "raining", ConsoleColors.FG_BLUE);
       System.out.println(" hard, you look around but see no shelter nearby.");
       System.out.println("You inspect the structure fast, it seems stable, and you go down the stairs.\n");
       ConsoleInputTool.askPressEnterToContinue();
@@ -46,7 +45,7 @@ public class DungeonSlasher {
       while (running) {
          // new enemy/round
          player.incrementEnemiesEncountered();
-         ConsoleColorTool.printInColorAndReset("##|==========> " + player.getEnemiesEncountered(), ConsoleColors.FG_RED);
+         ConsoleOutputTool.printlnInColorAndReset("##|==========> " + player.getEnemiesEncountered(), ConsoleColors.FG_RED);
          //System.out.println("##|==========> " + player.getEnemiesEncountered());
          boolean specialRound = player.getEnemiesEncountered() % 20 == 0;
          int difficulty = player.getEnemiesEncountered() / 20;
@@ -75,7 +74,7 @@ public class DungeonSlasher {
             if (!specialRound)
                System.out.println("\t3. Run!");
 
-            int choice = ConsoleInputTool.askUserInputInteger(
+            int choice = ConsoleInputTool.askUserInteger(
                     "\t** Your choice: ", 1, specialRound ? 2 : 3);
             switch (choice) {
                case 1:
@@ -126,33 +125,33 @@ public class DungeonSlasher {
             }
             break;
          }
-         ConsoleColorTool.setPrintColor(ConsoleColors.FG_GREEN);
-         StringDecorator.printAlert(null); //System.out.println("-!!------------------------!!-");
+         ConsoleOutputTool.setPrintColor(ConsoleColors.FG_GREEN);
+         ConsoleOutputTool.printAlert(null); //System.out.println("-!!------------------------!!-");
          if (enemy.getHealth() < 1) {
-            StringDecorator.printAlert(enemy.getType() + " was defeated!");
+            ConsoleOutputTool.printAlert(enemy.getType() + " was defeated!");
             player.incrementBattlesWon();
             int goldWon = (1 + rand.nextInt(10)) * 10;
             if (specialRound)
                goldWon += 10_000;
-            StringDecorator.printAlert("gold found: " + goldWon + " gold coins.");
+            ConsoleOutputTool.printAlert("gold found: " + goldWon + " gold coins.");
             player.addGold(goldWon);
-            StringDecorator.printAlert("You now have " + player.getGold() + " gold coins.");
+            ConsoleOutputTool.printAlert("You now have " + player.getGold() + " gold coins.");
          }
-         StringDecorator.printAlert("You have " + player.getHealth() + " HP left.");
+         ConsoleOutputTool.printAlert("You have " + player.getHealth() + " HP left.");
          if (enemy.getHealth() < 1 && (rand.nextInt(100) < healthPotionDropChance || specialRound)) {
             player.incrementPotions();
-            StringDecorator.printAlert("The " + enemy.getType() + " dropped a health potion!");
-            StringDecorator.printAlert("You now have " + player.getInventoryPotionCount() + " health potion(s).");
+            ConsoleOutputTool.printAlert("The " + enemy.getType() + " dropped a health potion!");
+            ConsoleOutputTool.printAlert("You now have " + player.getInventoryPotionCount() + " health potion(s).");
          }
-         StringDecorator.printAlert(null); //System.out.println("-!!------------------------!!-");
-         ConsoleColorTool.resetPrintgColor();
+         ConsoleOutputTool.printAlert(null); //System.out.println("-!!------------------------!!-");
+         ConsoleOutputTool.resetPrintColor();
 
          // Future action
          System.out.println("What would you like to do now?");
          System.out.println("1. Continue fighting");
          System.out.println("2. Exit dungeon");
 
-         int choice = ConsoleInputTool.askUserInputInteger("** Your choice: ", 1, 2);
+         int choice = ConsoleInputTool.askUserInteger("** Your choice: ", 1, 2);
          switch (choice) {
             case 1:
                System.out.println("\n> You continue on your adventure!");
@@ -164,7 +163,7 @@ public class DungeonSlasher {
       }// --> GAME_LOOP // while(running)
       System.out.println("Statisics");
       System.out.println("=========");
-      ConsoleColorTool.printInColorAndReset("> Gold coins: " + player.getGold(), ConsoleColors.FG_YELLOW);
+      ConsoleOutputTool.printlnInColorAndReset("> Gold coins: " + player.getGold(), ConsoleColors.FG_YELLOW);
       System.out.println("> Enemies encountered: " + player.getEnemiesEncountered());
       System.out.println("> Enemies defeated: " + player.getBattlesWon());
       System.out.println("> Health remaining: " + player.getHealth());
