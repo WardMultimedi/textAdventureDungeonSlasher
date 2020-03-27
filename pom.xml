@@ -16,7 +16,7 @@
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <release>11</release>
-        <exec.mainClass>${project.groupId}.App</exec.mainClass>
+        <exec.mainClass>${project.groupId}.DungeonSlasherApp</exec.mainClass>
     </properties>
 
     <dependencies>
